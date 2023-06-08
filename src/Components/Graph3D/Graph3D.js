@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 
 import Canvas from "../../Modules/Canvas/canvas";
-import Math3D, { Point, Cube, Sphere, Pyramide, Ellips} from "../../Modules/Math3D";
+import Math3D, { Point, Cube, Sphere, Pyramide, Ellips, Cylind, Cone, Tor, Paraboloid, HCylind} from "../../Modules/Math3D";
 
 export default function Graph3D() {
     const WIN = {
@@ -147,6 +147,36 @@ export default function Graph3D() {
         })
     };
 
+    const checkBoxes = [
+        {
+            text: 'Точки',
+            onClick: (value) => showHidePoints(value),
+            checked: false,
+        },
+        {
+            text: 'Рёбра',
+            onClick: (value) => showHideEdges(value),
+            checked: false,
+        },
+        {
+            text: 'Полигоны',
+            onClick: (value) => showHidePolygons(value),
+            checked: true,
+        }
+    ]
+
+    const showHidePoints = (value) => {
+        checkBoxes[0].checked = value;
+    }
+
+    const showHideEdges = (value) => {
+        checkBoxes[1].checked = value;
+    }
+
+    const showHidePolygons = (value) => {
+        checkBoxes[2].checked = value;
+    }
+
     const changeFigureHandler = (name) => {
         switch (name) {
             case 'Cube':
@@ -161,8 +191,23 @@ export default function Graph3D() {
                 break;
             case 'Ellips':
                 figures[0] = new Ellips({});
-                console.log(figures)
                 break;
+            case 'Cylind':
+                figures[0] = new Cylind({});
+                break;  
+            case 'Cone':
+                figures[0] = new Cone({});
+                break;
+            case 'Tor':
+                figures[0] = new Tor({});
+                break; 
+            case 'Paraboloid':
+                figures[0] = new Paraboloid({});
+                break; 
+            case 'HCylind':
+                figures[0] = new HCylind({});
+                console.log(figures)
+                break;   
             default: break;
         }
         renderScene();
@@ -173,8 +218,15 @@ export default function Graph3D() {
         <div>
             <button onClick={() => changeFigureHandler('Cube')}>Cube</button>
             <button onClick={() => changeFigureHandler('Sphere')}>Sphere</button>
-            <button onClick={() => changeFigureHandler('Pyramide')}>Pyramide</button>
             <button onClick={() => changeFigureHandler('Ellips')}>Ellips</button>
+            <button onClick={() => changeFigureHandler('Cylind')}>Cylind</button>
+            <button onClick={() => changeFigureHandler('Cone')}>Cone</button>
+            <button onClick={() => changeFigureHandler('Tor')}>Tor</button>
+            <button onClick={() => changeFigureHandler('Paraboloid')}>Paraboloid</button>
+            <button onClick={() => changeFigureHandler('HCylind')}>HCylind</button>
+
+
+
 
         </div>
     </>
