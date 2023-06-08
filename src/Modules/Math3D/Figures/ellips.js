@@ -6,8 +6,9 @@ export default class Ellips extends Figure {
         focusOz = 20,
         count = 20,
         color = '#44ddee',
+        center,
         x, y, z }) {
-        super({ color, x, y, z });
+        super({ color, center, x, y, z });
 
         this.focusOx = focusOx;
         this.focusOy = focusOy;
@@ -24,9 +25,9 @@ export default class Ellips extends Figure {
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.x + this.focusOx * Math.sin(i * propI) * Math.cos(j * propJ),
-                    this.y + this.focusOy * Math.cos(i * propI),
-                    this.z + this.focusOz * Math.sin(i * propI) * Math.sin(j * propJ),
+                    this.center.x + this.focusOx * Math.sin(i * propI) * Math.cos(j * propJ),
+                    this.center.y + this.focusOy * Math.cos(i * propI),
+                    this.center.z + this.focusOz * Math.sin(i * propI) * Math.sin(j * propJ),
                 ));
             }
         }
