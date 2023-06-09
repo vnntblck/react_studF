@@ -104,4 +104,45 @@ export default class Math3D {
 			[0, 0, 0, 1]
 		];
 	}
+
+	calcShadow(polygon, figures, LIGHT) {
+        if (polygon.radius) {
+            const m1 = polygon.centre;
+            const radius = polygon.radius;
+            const s = this.calcVector(m1, LIGHT);
+            for (let i = 0; i < figures.length; i++) {
+                if (polygon.figureIndex === i) {
+                    continue;
+                }
+
+                if (figures[i]) {
+                    for (let j = 0; j < figures[i].polygons.length; j++) {
+                        const polygon2 = figures[i].polygons[j];
+                        const m0 = polygon2.centre;
+                        if (polygon.lumen < polygon2.lumen) {
+                            continue;
+                        }
+                        const dark = this.calcVectorModule(
+                            this.vectProd(this.calcVector(m0, m1),
+                                s
+                            )) / this.calcVectorModule(s);
+                        if (dark < radius) {
+                            return {
+                                isShadow: true,
+                                dark: dark / 1.3
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return {
+            isShadow: false,
+        }
+    }
+
+	calcIllumination(distance, lumen) {
+        const res = distance ? lumen / Math.pow(distance, 3) : 1;
+        return res > 1 ? 1 : res;
+    }
 }

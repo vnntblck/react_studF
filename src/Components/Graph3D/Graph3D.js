@@ -14,6 +14,7 @@ export default function Graph3D() {
         CAMERA: new Point(0, 0, 50),
     };
     const LIGHT = new Light(20, 20, -10);
+    const scene = [];
 
     const height = 500;
     const width = 500;
@@ -87,6 +88,8 @@ export default function Graph3D() {
         };
     };
 
+
+
     function renderScene() {
         canvas.clear()
         figures.forEach(figure => {
@@ -107,7 +110,10 @@ export default function Graph3D() {
                     };
 
                     let { r, g, b } = polygon.color;
-                    const lumen = 1 //math3D.calcIllumination(polygon.distance, LIGHT.lumen);
+                    const { isShadow, dark } = (checkBoxes[4].checked ?
+                        math3D.calcShadow(polygon, scene, LIGHT) : false);
+                    const lumen = math3D.calcIllumination(polygon.distance,
+                        LIGHT.lumen * (isShadow ? dark : 1));
                     r = Math.round(r * lumen);
                     g = Math.round(g * lumen);
                     b = Math.round(b * lumen);
@@ -169,7 +175,20 @@ export default function Graph3D() {
             text: 'Полигоны',
             onClick: (value) => showHidePolygons(value),
             checked: true,
-        }
+        },
+        {
+            text: 'Анимация',
+            onClick: (value) => showHideAnimation(value),
+            checked: false,
+        },
+        {
+            text: 'Тени',
+            onClick: (value) => showHideShadows(value),
+            checked: false,
+        },
+   
+
+        
     ]
 
     const showHidePoints = (value) => {
@@ -183,6 +202,15 @@ export default function Graph3D() {
     const showHidePolygons = (value) => {
         checkBoxes[2].checked = value;
     }
+
+    const showHideAnimation = (value) => {
+        checkBoxes[3].checked = value;
+    }
+
+    const showHideShadows = (value) => {
+        checkBoxes[4].checked = value;
+    }
+
 
     const changeFigureHandler = (name) => {
         switch (name) {
