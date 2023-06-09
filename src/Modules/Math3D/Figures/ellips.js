@@ -5,7 +5,7 @@ export default class Ellips extends Figure {
         focusOy = 15,
         focusOz = 20,
         count = 20,
-        color = '#44ddee',
+        color = '#eeff8e',
         center,
         x, y, z }) {
         super({ color, center, x, y, z });

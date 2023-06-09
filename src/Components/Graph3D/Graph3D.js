@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 
 import Canvas from "../../Modules/Canvas/canvas";
-import Math3D, { Point, Cube, Sphere, Pyramide, Ellips, Cylind, Cone, Tor, Paraboloid, HCylind} from "../../Modules/Math3D";
+import Math3D, { Point, Light, Cube, Sphere, Pyramide, Ellips, Cylind, Cone, Tor, Paraboloid, HCylind, DoubleHyperboloid} from "../../Modules/Math3D";
 
 export default function Graph3D() {
     const WIN = {
@@ -13,6 +13,8 @@ export default function Graph3D() {
         DISPLAY: new Point(0, 0, 30),
         CAMERA: new Point(0, 0, 50),
     };
+    const LIGHT = new Light(20, 20, -10);
+
     const height = 500;
     const width = 500;
     const figures = [new Cube({})];
@@ -95,6 +97,7 @@ export default function Graph3D() {
                     WIN.CAMERA,
                     'distance',
                 );
+                math3D.calcDistance(figure, LIGHT, 'lumen');
 
 
                 figure.polygons.forEach((polygon) => {
@@ -124,28 +127,32 @@ export default function Graph3D() {
             }
         })
 
-        figures.forEach(figure => {
-            figure.edges.forEach(edge => {
-                const point1 = figure.points[edge.p1];
-                const point2 = figure.points[edge.p2];
-                canvas.line(
-                    math3D.xs(point1),
-                    math3D.ys(point1),
-                    math3D.xs(point2),
-                    math3D.ys(point2),
-                    2, 'Black'
-                );
-            });
-        });
+        
 
-        figures.forEach(figure => {
-            if (figure) {
-                figure.points.forEach(point => {
-                    canvas.point(math3D.xs(point), math3D.ys(point), 'black', 4);
-                });
-            };
-        })
+        // figures.forEach(figure => {
+        //     figure.edges.forEach(edge => {
+        //         const point1 = figure.points[edge.p1];
+        //         const point2 = figure.points[edge.p2];
+        //         canvas.line(
+        //             math3D.xs(point1),
+        //             math3D.ys(point1),
+        //             math3D.xs(point2),
+        //             math3D.ys(point2),
+        //             2, 'Black'
+        //         );
+        //     });
+        // });
+
+        // figures.forEach(figure => {
+        //     if (figure) {
+        //         figure.points.forEach(point => {
+        //             canvas.point(math3D.xs(point), math3D.ys(point), 'black', 4);
+        //         });
+        //     };
+        // })
     };
+
+    
 
     const checkBoxes = [
         {
@@ -208,6 +215,10 @@ export default function Graph3D() {
                 figures[0] = new HCylind({});
                 console.log(figures)
                 break;   
+            case 'DoubleHyperboloid':
+                figures[0] = new DoubleHyperboloid({});
+                console.log(figures)
+                break;   
             default: break;
         }
         renderScene();
@@ -224,6 +235,8 @@ export default function Graph3D() {
             <button onClick={() => changeFigureHandler('Tor')}>Tor</button>
             <button onClick={() => changeFigureHandler('Paraboloid')}>Paraboloid</button>
             <button onClick={() => changeFigureHandler('HCylind')}>HCylind</button>
+            <button onClick={() => changeFigureHandler('DoubleHyperboloid')}>DoubleHyperboloid</button>
+
 
 
 

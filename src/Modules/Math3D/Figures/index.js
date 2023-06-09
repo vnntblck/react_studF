@@ -8,8 +8,9 @@ import Cone from "./cone";
 import Tor from "./Tor";
 import Paraboloid from "./Paraboloid";
 import HCylind from "./HCylind";
+import DoubleHyperboloid from "./doubleHyperboloid";
 
-export {Cube, Sphere, Pyramide, Ellips, Cylind, Cone, Tor, Paraboloid, HCylind}
+export {Cube, Sphere, Pyramide, Ellips, Cylind, Cone, Tor, Paraboloid, HCylind, DoubleHyperboloid}
 
 
 
